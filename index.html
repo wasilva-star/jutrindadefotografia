@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallace Silva — Fotógrafo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --ink: #1a1614;
+    --muted: #6b6259;
+    --accent: #c4935a;
+    --border: rgba(26,22,20,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    cursor: crosshair;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 6rem 6rem;
+    position: relative;
+  }
+
+  .hero-tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 38ch;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 0.25rem;
+    transition: color 0.3s, border-color 0.3s;
+    width: fit-content;
+  }
+
+  .hero-cta:hover { color: var(--accent); border-color: var(--accent); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-img-main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(8%) contrast(1.05);
+    transition: transform 8s ease;
+  }
+
+  .hero-right:hover .hero-img-main {
+    transform: scale(1.03);
+  }
+
+  .hero-img-overlay {
+    position: absolute;
+    bottom: 2.5rem;
+    left: -2rem;
+    width: 220px;
+    height: 280px;
+    object-fit: cover;
+    filter: sepia(12%) contrast(1.08);
+    border: 6px solid var(--warm-white);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    transition: transform 0.5s ease;
+  }
+
+  .hero-img-overlay:hover { transform: translateY(-8px) rotate(-1deg); }
+
+  .hero-counter {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+  }
+
+  /* STATS */
+  .stats {
+    background: var(--cream);
+    padding: 4rem 6rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-num {
+    display: block;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* PORTFOLIO */
+  #portfolio { padding: 8rem 4rem; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 1.5rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(5%) contrast(1.05);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.06);
+    filter: sepia(0%) contrast(1.08);
+  }
+
+  .gallery-item-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(26,22,20,0.75));
+    padding: 2rem 1.5rem 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-item-info { transform: translateY(0); }
+
+  .gallery-item-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .gallery-item-title {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #faf8f4;
+  }
+
+  /* Grid placement */
+  .g1 { grid-column: 1 / 6; grid-row: 1; aspect-ratio: 3/4; }
+  .g2 { grid-column: 6 / 9; grid-row: 1; aspect-ratio: 2/3; }
+  .g3 { grid-column: 9 / 13; grid-row: 1; aspect-ratio: 3/4; }
+  .g4 { grid-column: 1 / 5; grid-row: 2; aspect-ratio: 4/3; }
+  .g5 { grid-column: 5 / 9; grid-row: 2; aspect-ratio: 1/1; }
+  .g6 { grid-column: 9 / 13; grid-row: 2; aspect-ratio: 4/5; }
+
+  /* ABOUT */
+  #about {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 8rem 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-img-wrap {
+    position: relative;
+  }
+
+  .about-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    filter: sepia(10%) contrast(1.1) brightness(0.92);
+  }
+
+  .about-img-badge {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    width: 120px;
+    height: 120px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .about-content {}
+
+  .about-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .about-title {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  .about-title em { font-style: italic; }
+
+  .about-text {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.72);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-services {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .service-item {
+    border-top: 0.5px solid rgba(245,240,232,0.2);
+    padding-top: 1rem;
+  }
+
+  .service-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .service-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.6);
+  }
+
+  /* FEATURED */
+  #featured { padding: 8rem 4rem; background: var(--cream); }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 4rem;
+  }
+
+  .featured-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 2/3;
+    cursor: pointer;
+  }
+
+  .featured-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(20%) sepia(8%);
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s;
+  }
+
+  .featured-item:hover img {
+    transform: scale(1.08);
+    filter: grayscale(0%) sepia(0%);
+  }
+
+  .featured-label {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--warm-white);
+    color: var(--ink);
+    padding: 0.35rem 0.8rem;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .featured-item:hover .featured-label { opacity: 1; transform: translateY(0); }
+
+  /* TESTIMONIAL */
+  .testimonial {
+    padding: 8rem 6rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .testimonial-quote {
+    font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+  }
+
+  .testimonial-author {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .testimonial-divider {
+    width: 1px;
+    height: 60px;
+    background: var(--border);
+    margin: 0 auto 3rem;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 8rem 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-left {}
+
+  .contact-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .contact-title {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .contact-title em { font-style: italic; }
+
+  .contact-text {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.9;
+    margin-bottom: 3rem;
+  }
+
+  .contact-email {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(196,147,90,0.4);
+    padding-bottom: 0.25rem;
+    transition: border-color 0.3s;
+  }
+
+  .contact-email:hover { border-color: var(--accent); }
+
+  .contact-right {}
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .form-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+
+  .form-input, .form-textarea {
+    background: rgba(245,240,232,0.05);
+    border: 0.5px solid rgba(245,240,232,0.15);
+    padding: 1rem 1.2rem;
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    border-radius: 0;
+    resize: none;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: rgba(196,147,90,0.5);
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: rgba(245,240,232,0.25);
+  }
+
+  .form-textarea { height: 140px; }
+
+  .form-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--accent);
+    color: var(--warm-white);
+    border: none;
+    padding: 1.1rem 2.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .form-btn:hover { background: #b07d40; transform: translateY(-2px); }
+  .form-btn:active { transform: translateY(0); }
+
+  /* FOOTER */
+  footer {
+    padding: 2.5rem 6rem;
+    background: var(--ink);
+    border-top: 0.5px solid rgba(245,240,232,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.3);
+    text-transform: uppercase;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-social a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-social a:hover { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tagline { animation: fadeUp 0.8s ease both; }
+  .hero-title { animation: fadeUp 0.8s 0.15s ease both; }
+  .hero-desc { animation: fadeUp 0.8s 0.3s ease both; }
+  .hero-cta { animation: fadeUp 0.8s 0.45s ease both; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,22,20,0.97);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+
+  .lightbox.active { display: flex; }
+
+  .lightbox img {
+    max-width: 85vw;
+    max-height: 90vh;
+    object-fit: contain;
+    filter: sepia(5%) contrast(1.08);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 2rem; right: 2.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    cursor: pointer;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+  }
+
+  .lightbox-close:hover { color: var(--accent); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 5rem 2rem 3rem; }
+    .hero-right { height: 55vw; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 3rem 2rem; }
+    #portfolio { padding: 5rem 2rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .g1,.g2,.g3,.g4,.g5,.g6 { grid-column: auto; grid-row: auto; aspect-ratio: 3/4; }
+    #about { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 3rem; }
+    .featured-grid { grid-template-columns: 1fr 1fr; }
+    .featured-grid .featured-item:last-child { display: none; }
+    #contact { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 3rem; }
+    footer { flex-direction: column; gap: 1.5rem; padding: 2rem; text-align: center; }
+    .testimonial { padding: 5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">WS</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#featured">Séries</a></li>
+    <li><a href="#contact">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tagline">Fotógrafo — Rio de Janeiro, BR</p>
+    <h1 class="hero-title">
+      A luz<br>
+      que <em>conta</em><br>
+      histórias
+    </h1>
+    <p class="hero-desc">
+      Capturo momentos onde a luz e a emoção se encontram — retratos, casamentos e ensaios editoriais com olhar sensível e composição poética.
+    </p>
+    <a href="#portfolio" class="hero-cta">
+      Ver portfólio &nbsp;→
+    </a>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img-main"
+      src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=900&q=80&fit=crop"
+      alt="Retrato principal">
+    <img class="hero-img-overlay"
+      src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80&fit=crop"
+      alt="Retrato secundário">
+    <span class="hero-counter">01 / 06</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-num">8+</span>
+    <span class="stat-label">Anos de experiência</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">340</span>
+    <span class="stat-label">Projetos realizados</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">24</span>
+    <span class="stat-label">Prêmios e publicações</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">12</span>
+    <span class="stat-label">Países fotografados</span>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-header">
+    <h2 class="section-title">Portfólio</h2>
+    <span class="section-num">— 01</span>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item g1" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=85&fit=crop" alt="Retrato feminino">
+      <div class="gallery-item-info">
+        <p class="gallery-item-cat">Retrato</p>
+        <p class="gallery-item-title">Luz natural, alma revelada</p>
+      </div>
+    </div>
+    <div class="gallery-item g2" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=85&fit=crop" alt="Casamento">
+      <div class="gallery-item-info">
+        <p class="gallery-item-cat">Casamento</p>
+        <p class="gallery-item-title">O olhar que promete</p>
+      </div>
+    </div>
+    <div class="gallery-item g3" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=700&q=85&fit=crop" alt="Editorial">
+      <div class="gallery-item-info">
+        <p class="gallery-item-cat">Editorial</p>
+        <p class="gallery-item-title">Forma e silêncio</p>
+      </div>
+    </div>
+    <div class="gallery-item g4" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85&fit=crop&crop=top" alt="Casamento cerimônia">
+      <div class="gallery-item-info">
+        <p class="gallery-item-cat">Casamento</p>
+        <p class="gallery-item-title">O momento que para o tempo</p>
+      </div>
+    </div>
+    <div class="gallery-item g5" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=700&q=85&fit=crop" alt="Urbano">
+      <div class="gallery-item-info">
+        <p class="gallery-item-cat">Urbano</p>
+        <p class="gallery-item-title">Geometria da cidade</p>
+      </div>
+    </div>
+    <div class="gallery-item g6" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=700&q=85&fit=crop" alt="Retrato masculino">
+      <div class="gallery-item-info">
+        <p class="gallery-item-cat">Retrato</p>
+        <p class="gallery-item-title">Presença e caráter</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-wrap">
+    <img class="about-img"
+      src="https://images.unsplash.com/photo-1552168324-d612d77725e3?w=700&q=80&fit=crop"
+      alt="Lucas Moraes fotógrafo">
+    <div class="about-img-badge">
+      Baseado<br>no Rio
+    </div>
+  </div>
+  <div class="about-content">
+    <p class="about-eyebrow">Sobre mim — 02</p>
+    <h2 class="about-title">
+      Fotografia como<br><em>linguagem poética</em>
+    </h2>
+    <p class="about-text">
+      Comecei a fotografar aos 17 anos nas ruas do Rio de Janeiro, fascinado pela luz que escorrega pelas fachadas e pelos olhos que carregam histórias inteiras.
+    </p>
+    <p class="about-text">
+      Ao longo de oito anos, desenvolvi um olhar que une técnica rigorosa e sensibilidade humana — seja num casamento íntimo na Serra, num ensaio editorial, ou numa tarde de retratos no Aterro.
+    </p>
+    <div class="about-services">
+      <div class="service-item">
+        <p class="service-name">Casamentos</p>
+        <p class="service-desc">Cobertura completa, do getting ready ao último brinde</p>
+      </div>
+      <div class="service-item">
+        <p class="service-name">Retratos</p>
+        <p class="service-desc">Ensaios individuais, familiares e de gestante</p>
+      </div>
+      <div class="service-item">
+        <p class="service-name">Editorial</p>
+        <p class="service-desc">Moda, campanha e conteúdo para marcas</p>
+      </div>
+      <div class="service-item">
+        <p class="service-name">Eventos</p>
+        <p class="service-desc">Corporativos, lançamentos e festivais</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED SERIES -->
+<section id="featured">
+  <div class="section-header">
+    <h2 class="section-title">Séries fotográficas</h2>
+    <span class="section-num">— 03</span>
+  </div>
+  <div class="featured-grid">
+    <div class="featured-item">
+      <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=80&fit=crop" alt="Série Pele">
+      <div class="featured-label">Série — Pele e Luz</div>
+    </div>
+    <div class="featured-item">
+      <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=80&fit=crop" alt="Série Casamentos">
+      <div class="featured-label">Série — Amor e Promessa</div>
+    </div>
+    <div class="featured-item">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop" alt="Série Retratos">
+      <div class="featured-label">Série — Faces do Rio</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<div class="testimonial">
+  <div class="testimonial-divider"></div>
+  <blockquote class="testimonial-quote">
+    "As fotos do nosso casamento são mais do que registros — são memórias que a gente vai olhar pelo resto da vida e sentir tudo de novo."
+  </blockquote>
+  <p class="testimonial-author">— Camila & Rafael · Casamento em Petrópolis, 2024</p>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <p class="contact-eyebrow">Contato — 04</p>
+    <h2 class="contact-title">
+      Vamos criar<br><em>algo juntos?</em>
+    </h2>
+    <p class="contact-text">
+      Seja um casamento, um ensaio ou um projeto editorial — adoraria ouvir sua ideia e construir algo memorável.
+    </p>
+    <a href="mailto:lucas@lucasmoraes.foto" class="contact-email">
+      wallace@wallacesilva.foto
+    </a>
+  </div>
+  <div class="contact-right">
+    <form class="contact-form" onsubmit="handleForm(event)">
+      <div class="form-group">
+        <label class="form-label">Nome</label>
+        <input class="form-input" type="text" placeholder="Seu nome completo" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input class="form-input" type="email" placeholder="seu@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipo de projeto</label>
+        <input class="form-input" type="text" placeholder="Casamento, retrato, editorial...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mensagem</label>
+        <textarea class="form-textarea" placeholder="Conte um pouco sobre o seu projeto..."></textarea>
+      </div>
+      <button type="submit" class="form-btn">Enviar mensagem &nbsp;→</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2026 Wallace Silva Fotografia</span>
+  <div class="footer-social">
+    <a href="#">Instagram</a>
+    <a href="#">Behance</a>
+    <a href="#">WhatsApp</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">Fechar ✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  function openLightbox(el) {
+    const img = el.querySelector('img');
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-btn');
+    btn.textContent = 'Mensagem enviada ✓';
+    btn.style.background = '#4a7c59';
+    setTimeout(() => {
+      btn.textContent = 'Enviar mensagem →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3500);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.gallery-item, .featured-item, .stat-item, .service-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
